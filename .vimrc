@@ -5,7 +5,6 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tomasr/molokai'
@@ -16,8 +15,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'majutsushi/tagbar'
 Plugin 'scrooloose/nerdtree'
-" Plugin 'xolox/vim-easytags'
-" Plugin 'xolox/vim-misc'
 Plugin 'vim-scripts/indexer.tar.gz'
 Plugin 'vim-scripts/DfrankUtil'
 Plugin 'vim-scripts/vimprj'
@@ -39,11 +36,14 @@ let mapleader=";"
 filetype on
 " 根据侦测到的不同类型加载对应的插件
 filetype plugin on
+" 自适应不同语言的智能缩进
+filetype indent on
 
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至 vim
 nmap <Leader>p "+p
+
 " 跳转至右方的窗口
 nnoremap <C-l> <C-W>l
 " 跳转至左方的窗口
@@ -54,7 +54,7 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-j> <C-W>j
 
 " 让配置变更立即生效
-" autocmd BufWritePost $MYVIMRC source $MYVIMRC
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " 开启实时搜索功能
 set incsearch
@@ -65,10 +65,13 @@ set nocompatible
 " vim 自身命令行模式智能补全
 set wildmenu
 
-" 配色方案
-" set background=dark
+" 配色方案及底部导航栏设置
+" set background=light
 " colorscheme solarized
+" let g:airline_theme='solarized'
+" let g:airline_solarized_bg='light'
 colorscheme molokai
+let g:airline_theme='molokai'
 
 " 禁止光标闪烁
 set gcr=a:block-blinkon0
@@ -81,8 +84,6 @@ set guioptions-=R
 set guioptions-=m
 set guioptions-=T
 
-" 总是显示状态栏
-set laststatus=2
 " 显示光标当前位置
 set ruler
 " 开启行号显示
@@ -95,16 +96,11 @@ set hlsearch
 " 禁止折行
 set nowrap
 
-" 设置状态栏主题风格 error
-" let g:airline_theme='solarized256'
-
 " 开启语法高亮功能
 syntax enable
 " 允许用指定语法高亮配色方案替换默认方案
 syntax on
 
-" 自适应不同语言的智能缩进
-filetype indent on
 " 将制表符扩展为空格
 set expandtab
 " 设置编辑时制表符占用空格数
@@ -114,14 +110,13 @@ set shiftwidth=4
 " 让 vim 把连续数量的空格视为一个制表符
 set softtabstop=4
 
+" Plugin 'nathanaelkane/vim-indent-guides'
 " 随 vim 自启动
 let g:indent_guides_enable_on_vim_startup=1
 " 从第二层开始可视化显示缩进
 let g:indent_guides_start_level=2
 " 色块宽度
 let g:indent_guides_guide_size=1
-" 快捷键 i 开/关缩进可视化
-:nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 
 " 基于缩进或语法进行代码折叠
 "set foldmethod=indent
@@ -129,10 +124,12 @@ set foldmethod=syntax
 " 启动 vim 时关闭折叠代码
 set nofoldenable
 
+" Plugin 'derekwyatt/vim-fswitch'
 " *.cpp 和 *.h 间切换 感觉有问题，从cc切换时变成了.hh文件
 nmap <silent> <Leader>sw :FSHere<cr>
 
-" 使用 NERDTree 插件查看工程文件。设置快捷键，速记：file list
+" Plugin 'scrooloose/nerdtree'
+" 使用 NERDTree 插件查看工程文件。设置快捷键 nt
 nmap nt :NERDTreeToggle<CR>
 " 设置NERDTree子窗口宽度
 let NERDTreeWinSize=32
@@ -145,11 +142,12 @@ let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
 
-" 设置 tagbar 子窗口的位置出现在主编辑区的左边 
+" Plugin 'majutsushi/tagbar'
+" 设置 tagbar 子窗口的位置出现在主编辑区的右边 
 let tagbar_right=1 
-" 设置 ctags 所在目录
+" 设置 ctags 所在目录，这里每个人均有不同
 let g:tagbar_ctags_bin='/usr/local/bin/ctags'
-" 设置显示／隐藏标签列表子窗口的快捷键。速记：identifier list by tag
+" 设置显示／隐藏标签列表子窗口的快捷键 tb
 nnoremap tb :TagbarToggle<CR> 
 " 设置标签子窗口的宽度 
 let tagbar_width=32 
@@ -190,26 +188,28 @@ let g:tagbar_type_cpp = {
      \ }
 \ }
 
-" easytags能否自定义不同语言的配置项，能否防止效率问题，能否分别配置多个tags
-" 设置 ctags 所在目录
-" let g:easytags_cmd='/usr/local/bin/ctags'
+" Plugin 'vim-scripts/indexer.tar.gz'
 " 设置插件 indexer 调用 ctags 的参数
 " 默认 --c++-kinds=+p+l，重新设置为 --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v
-" 默认 --fields=+iaS 不满足 YCM 要求，需改为 --fields=+iaSl
+" 默认 --fields=+iaS 不满足 YCM 要求，需改为
+" --fields=+iaSl，即增加了language选项
 let g:indexer_ctagsCommandLineOptions="--c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+iaSl --extra=+q"
 " 关闭ctags警告
 let g:indexer_disableCtagsWarning=1
 
-let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
-set tags+=/Users/haozhen/Documents/codes/libs/stdcpp/4.2.1/stdcpp.tags
-set tags+=/Users/haozhen/Documents/codes/libs/sys/sys.tags
+" ctags，为什么没有底部prefix弹出？
+" 正向遍历同名标签
+nmap <Leader>tn :tnext<CR>
+" 反向遍历同名标签
+nmap <Leader>tp :tprevious<CR>
 
+" Plugin 'dyng/ctrlsf.vim'
 " 怎么将窗口放到左侧第二个？ 怎么搜索后直接跳到新buffer中？
-" 各配置项有什么ququ区别？
+" 各配置项有什么区别？
 " 使用CtrlSF进行搜索
 nmap <C-F>t :CtrlSF<CR>
 
-" vim-multi-cursors
+" Plugin 'terryma/vim-multiple-cursors'
 " 怎么全选？
 " Default mapping
 " let g:multi_cursor_start_word_key='<C-n>'
@@ -221,18 +221,28 @@ let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
+" Plugin 'scrooloose/nerdcommenter'
 nmap <Leader>cc :NERDComComment
 nmap <Leader>cu :NERDComUnCommentLine
 
+" Plugin 'SirVer/ultisnips'
 " UltiSnips 的 tab 键与 YCM 冲突，重新设定
 let g:UltiSnipsExpandTrigger="<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger="<leader><tab>"
 let g:UltiSnipsJumpBackwardTrigger="<leader><s-tab>"
 
+" Plugin 'fholgado/minibufexpl.vim'
 " buffer 切换快捷键
 map <C-Tab> :MBEbn<cr>
 map <C-S-Tab> :MBEbp<cr>
 
+" Plugin 'Valloric/YouCompleteMe'
+" Error，到底怎么用？
+nnoremap <leader>jc :YcmCompleter GoToDeclaration<CR>
+" 只能是 #include 或已打开的文件
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+" 设置默认的.ycm_extra_conf.py文件，应该自己为每个项目做对应的文件
+" 此处涉及编译选项，需了解clang编译参数
 let g:ycm_global_ycm_extra_conf="/Users/haozhen/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py"
 " YCM 补全菜单配色
 " 菜单
@@ -245,8 +255,11 @@ let g:ycm_complete_in_comments=1
 let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
+" 为Omni增加默认命名空间，这个用在stdcpp库
+let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
 " 引入 C++ 标准库tags
-" set tags+=/data/misc/software/misc./vim/stdcpp.tags
+set tags+=/Users/haozhen/Documents/codes/libs/stdcpp/4.2.1/stdcpp.tags
+set tags+=/Users/haozhen/Documents/codes/libs/sys/sys.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
