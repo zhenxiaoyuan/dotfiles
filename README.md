@@ -3,7 +3,7 @@
 </h1>
 
 ### 目录
----
+------
 
 * [插件管理](#插件管理)
 * [基础配置](#基础配置)
@@ -13,7 +13,7 @@
 * [重型武器](#重型武器)
 
 ### 插件管理 <a name="插件管理">
----
+------
 
 * [Vundle](https://github.com/VundleVim/Vundle.vim)
 
@@ -72,12 +72,12 @@ filetype plugin indent on    " required
 *很多时候因网络状况的限制，下载YouCompleteMe需要相当长的时间，通常我使用git将仓库克隆到其对应的路径，但也必须将插件名称添加到插件列表中，否则插件不会被Vundle检测到并加载*
 
 ### 基础配置 <a name="基础配置">
----
+------
 
 *待完善*
 
 ### 界面美化 <a name="界面美化">
----
+------
 
 #### 颜色主题
 
@@ -129,7 +129,7 @@ let g:indent_guides_guide_size=1
 ```
 
 ### 文件加持 <a name="文件加持">
----
+------
 
 #### 标识符列表
 
@@ -228,7 +228,7 @@ let g:multi_cursor_quit_key='<Esc>'
 ```
 
 ### 工程加持 <a name="工程加持">
----
+------
 
 #### 文件夹管理
 
@@ -286,7 +286,7 @@ nmap <Leader>sf :CtrlSF<CR>
 ```
 
 ### 重型武器 <a name="重型武器">
----
+------
 
 #### Ctags
 
@@ -316,7 +316,7 @@ let g:indexer_disableCtagsWarning=1
 *待完善*
 
 ### 参考 && 感谢
----
+------
 
 [yangyangwithgnu/use_vim_as_ide](https://github.com/yangyangwithgnu/use_vim_as_ide#4.7.2)
 
