@@ -10,10 +10,12 @@
 4. [文件加持](#文件加持)
 5. [工程加持](#工程加持)
 6. [重型武器](#重型武器)
+7. [辅助工具](#辅助工具)
+8. [参考&感谢](#参考&感谢)
 
 ## 插件管理 <a name="插件管理">
 
-* [Vundle](https://github.com/VundleVim/Vundle.vim)
+[Vundle](https://github.com/VundleVim/Vundle.vim)是一个Vim的插件管理器，是Vim bundle的简称。
 
 1. 安装
 ```
@@ -63,8 +65,10 @@ filetype plugin indent on    " required
 :PluginInstall
 " 清除插件
 :PluginClean
-" 升级插件
-:PluginUpdate
+" 插件列表
+:PluginList
+" 查找插件
+:PluginSearch foo
 ```
 
 *很多时候因网络状况的限制，下载YouCompleteMe需要相当长的时间，通常我使用git将仓库克隆到其对应的路径，但也必须将插件名称添加到插件列表中，否则插件不会被Vundle检测到并加载*
@@ -308,7 +312,9 @@ let g:indexer_disableCtagsWarning=1
 
 *待完善*
 
-## 参考 && 感谢
+## 辅助工具<a name="辅助工具">
+
+## 参考&感谢<a name="参考&感谢">
 
 [yangyangwithgnu/use_vim_as_ide](https://github.com/yangyangwithgnu/use_vim_as_ide#4.7.2)
 
