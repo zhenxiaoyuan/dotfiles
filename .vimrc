@@ -158,6 +158,8 @@ let NERDTreeShowHidden=1
 let NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应 buffer
 let NERDTreeAutoDeleteBuffer=1
+" 开启行号显示
+let NERDTreeShowLineNumbers=1
 " 只剩NERDTree窗口时退出
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -271,10 +273,10 @@ let g:ycm_confirm_extra_conf=0
 " 开启 YCM 标签补全引擎
 let g:ycm_collect_identifiers_from_tags_files=1
 " 为Omni增加默认命名空间，这个用在stdcpp库
-" let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
+let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
 " " 引入 C++ 标准库tags
-" set tags+=/Users/haozhen/Documents/codes/libs/stdcpp/4.2.1/stdcpp.tags
-" set tags+=/Users/haozhen/Documents/codes/libs/sys/sys.tags
+set tags+=/home/zhenhao/Documents/codes/libs/c++/8/stdcpp.tags
+set tags+=/home/zhenhao/Documents/codes/libs/linux/sys.tags
 " YCM 集成 OmniCppComplete 补全引擎，设置其快捷键
 inoremap <leader>; <C-x><C-o>
 " 补全内容不以分割子窗口形式出现，只显示补全列表
