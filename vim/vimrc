@@ -1,0 +1,144 @@
+" Specify a directory for plugins
+" - For Windows: ~/vimfiles/plugged
+" - For Unix: ~/.vim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'tomasr/molokai'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'derekwyatt/vim-fswitch'
+Plug 'jsfaint/gen_tags.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Initialize plugin system
+call plug#end()
+
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";"
+
+" 开启文件类型侦测
+" 根据侦测到的不同类型加载对应的插件
+" 自适应不同语言的智能缩进
+filetype plugin indent on
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至 vim
+nmap <Leader>p "+p
+
+" 设置编码格式
+set encoding:utf-8
+set fileencodings:utf-8,gbk,gb2312,cp936
+set fileencoding:
+
+" 跳转至右方的窗口
+nnoremap <C-l> <C-W>l
+" 跳转至左方的窗口
+nnoremap <C-h> <C-W>h
+" 跳转至上方的子窗口
+nnoremap <C-k> <C-W>k
+" 跳转至下方的子窗口
+nnoremap <C-j> <C-W>j
+
+" 设置 J==5j | K==5k
+nmap J 5j
+nmap K 5k
+
+" 显示空格和制表符
+set list listchars=tab:\|\ ,trail:.
+
+" 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
+" 开启实时搜索功能
+set incsearch
+" 高亮显示搜索结果
+set hlsearch
+" 搜索时大小写不敏感
+set ignorecase
+" vim 自身命令行模式智能补全
+set wildmenu
+
+" 显示光标当前位置
+set ruler
+" 开启行号显示
+set number
+" 高亮显示当前行
+set cursorline
+" 禁止折行
+set nowrap
+
+" 开启语法高亮功能
+syntax enable
+" 允许用指定语法高亮配色方案替换默认方案
+syntax on
+
+" 将制表符扩展为空格
+set expandtab
+" 设置编辑时制表符占用空格数
+set tabstop=4
+" 设置格式化时制表符占用空格数
+set shiftwidth=4
+" 让 vim 把连续数量的空格视为一个制表符
+set softtabstop=4
+
+" 设置保存操作历史数量
+set history=512
+
+" 基于语法进行代码折叠
+set foldmethod=syntax
+" 启动 vim 时关闭折叠代码
+set nofoldenable
+
+" 配色方案及底部导航栏设置
+colorscheme molokai
+let g:airline_theme='molokai'
+" 关闭airline的error和warning部分
+let g:airline_section_error=''
+let g:airline_section_warning=''
+
+" FSwitch, 使用 ;ss 进行切换
+nmap <silent> <Leader>ss :FSHere<cr>
+" 设置 .h <=> .cc 之间的相互转换
+au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
+au BufEnter *.h let b:fswitchlocs = 'reg:/include/src/'
+au BufEnter *.cc let b:fswitchdst  = 'h'
+au BufEnter *.cc let b:fswitchlocs = 'reg:/include/src/'
+
+" 使用 NERDTree 插件查看工程文件。设置快捷键 nt
+nmap nt :NERDTreeToggle<CR>
+" 设置NERDTree子窗口宽度
+let NERDTreeWinSize=32
+" 设置NERDTree子窗口位置
+let NERDTreeWinPos="left"
+" 显示隐藏文件
+let NERDTreeShowHidden=1
+" NERDTree 子窗口中不显示冗余帮助信息
+let NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应 buffer
+let NERDTreeAutoDeleteBuffer=1
+" 开启行号显示
+let NERDTreeShowLineNumbers=1
+" 只剩NERDTree窗口时退出
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" 设置 tagbar 子窗口的位置出现在主编辑区的右边 
+let tagbar_right=1 
+" 设置显示／隐藏标签列表子窗口的快捷键 tb
+nnoremap tb :TagbarToggle<CR> 
+" 设置自动关注光标所在函数
+let g:tagbar_autofocus=1
+" 设置标签子窗口的宽度 
+let tagbar_width=32
+" tagbar 子窗口中不显示冗余帮助信息 
+let g:tagbar_compact=1
+
+" 添加注释
+nmap <Leader>cc :NERDComComment
+" 取消注释
+nmap <Leader>cu :NERDComUnCommentLine
